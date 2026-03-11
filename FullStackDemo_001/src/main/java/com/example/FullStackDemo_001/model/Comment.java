@@ -12,8 +12,9 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int commentId;
-    int userId;
-    int postId;
     String comment;
     LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

@@ -13,14 +13,15 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int postId;
-    int UserId;
     String title;
     String description;
     LocalDateTime createdAt;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     List<Comment> comments;
-    int share;
-    int like;
-    int dislike;
-
-
+    int shares;
+    int likes;
+    int dislikes;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 }
