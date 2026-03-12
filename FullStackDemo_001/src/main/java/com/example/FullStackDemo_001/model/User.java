@@ -20,9 +20,15 @@ public class User {
     private LocalDateTime DOB;
     private String address;
     private String currentCompany;
-    private String[] skills;
+    private String profilePhoto;
+    @ElementCollection
+    private List<String> skills;
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> following;
+    @OneToMany(mappedBy = "following")
+    private List<Follow> followers;
 
 
 }
