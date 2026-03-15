@@ -73,10 +73,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getFollowing(int userId){
         User user= userRepository.findById(userId).orElseThrow();
         List<Follow> follows=followRepository.findByFollower(user);
-        return follows
+             return follows
                 .stream()
                 .map(Follow::getFollowing)
                 .toList();
+
     }
 
     public List<User> saveAllUser(List<User> usrs){
@@ -86,4 +87,6 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
+
+
 }

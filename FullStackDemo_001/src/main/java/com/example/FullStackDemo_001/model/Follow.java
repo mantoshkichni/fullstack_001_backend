@@ -1,5 +1,6 @@
 package com.example.FullStackDemo_001.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,8 +14,10 @@ public class Follow {
     private int id;
     @ManyToOne
     @JoinColumn(name = "follower_id")
+    @JsonIgnore
     private User follower;
     @ManyToOne
     @JoinColumn(name="following_id")
+    @JsonIgnore
     private User following;
 }

@@ -35,9 +35,9 @@ public class Controller {
         return userService.getUser(logInUserData.getEmail(),logInUserData.getPassword());
     }
 
-    @PostMapping("/{followerId}/follow/{followingId}")
-    public void followUser(@PathVariable int followerId,
-                           @PathVariable int followingId) {
+    @PostMapping("/follow")//user1/Follow/User2
+    public void followUser(@RequestParam Integer followerId,
+                           @RequestParam Integer followingId) {
 
         userService.followUser(followerId, followingId);
     }
@@ -45,5 +45,15 @@ public class Controller {
     @GetMapping("/getAllUser")
     List<User> getAllUser(){
         return userService.getAllUser();
+    }
+
+    @PostMapping("/getUserFollowers")
+    List<User> getFollower(@RequestParam Integer userId){
+        return userService.getFollowing(userId);
+    }
+
+    @PostMapping("/getUserFollowing")
+    List<User> getFollowing(@RequestParam Integer userId){
+        return userService.getFollowers(userId);
     }
 }
