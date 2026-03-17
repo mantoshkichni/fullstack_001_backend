@@ -1,9 +1,12 @@
 package com.example.FullStackDemo_001.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -15,7 +18,9 @@ public class Post {
     int postId;
     String title;
     String description;
-    LocalDateTime createdAt;
+    String urlToImage;
+    OffsetDateTime createdAt;
+    @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     List<Comment> comments;
     int shares;

@@ -1,8 +1,10 @@
 package com.example.FullStackDemo_001.controller;
 
 import com.example.FullStackDemo_001.model.LogInUserData;
+import com.example.FullStackDemo_001.model.Post;
 import com.example.FullStackDemo_001.model.User;
 import com.example.FullStackDemo_001.response.Response;
+import com.example.FullStackDemo_001.serviceIMPL.PostServiceImpl;
 import com.example.FullStackDemo_001.serviceIMPL.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,11 @@ import java.util.List;
 public class Controller {
 
 
-    private UserServiceImpl userService;
-    Controller( UserServiceImpl userService){
+    private final UserServiceImpl userService;
+    private final  PostServiceImpl postService;
+    Controller( UserServiceImpl userService, PostServiceImpl postService){
         this.userService=userService;
+        this.postService=postService;
     }
 
     @PostMapping("/saveUser")
@@ -55,5 +59,18 @@ public class Controller {
     @PostMapping("/getUserFollowing")
     List<User> getFollowing(@RequestParam Integer userId){
         return userService.getFollowers(userId);
+    }
+
+    @PostMapping("/savePost")
+    Response savePost(@RequestBody Post post){
+        try {
+            User user=userService.getuserById(post.getUser().getUserId());
+            post.setUser(user);
+            postService.savePost(post);
+            return new Response("Success","200");
+        } catch (Exception e) {
+            return new Response(e.getMessage(),"400");
+        }
+
     }
 }
