@@ -17,6 +17,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int postId;
     String title;
+    @Column(columnDefinition = "TEXT")
     String description;
     String urlToImage;
     OffsetDateTime createdAt;
