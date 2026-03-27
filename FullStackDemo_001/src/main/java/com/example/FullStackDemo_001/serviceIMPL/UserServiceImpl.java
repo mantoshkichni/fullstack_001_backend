@@ -28,9 +28,9 @@ public class UserServiceImpl implements UserService {
         Response response;
         try {
             userRepository.save(user);
-             response= new Response("User added Successfuly.", "200");
+             response= new Response("User added Successfuly.", "200", user);
         } catch (RuntimeException e) {
-            return new Response(e.getMessage(),"400");
+            return new Response(e.getMessage(),"400", new User());
         }
         return response;
     }
@@ -39,13 +39,13 @@ public class UserServiceImpl implements UserService {
     public Response getUser(String email, String password) {
         Optional<User>  userOptional= userRepository.findByEmail(email);
         if(userOptional.isEmpty()){
-            return new Response("Email not Exist","400");
+            return new Response("Email not Exist","400",new User());
         }
         User user=userOptional.get();
         if(user.getPassword().equals(password)){
-            return  new Response("Login Successful","200");
+            return  new Response("Login Successful","200",user);
         }else{
-            return new Response("Invalid password","400");
+            return new Response("Invalid password","400",user);
         }
     }
     @Override

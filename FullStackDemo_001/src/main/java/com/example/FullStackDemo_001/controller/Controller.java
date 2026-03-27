@@ -67,9 +67,9 @@ public class Controller {
             User user=userService.getuserById(post.getUser().getUserId());
             post.setUser(user);
             postService.savePost(post);
-            return new Response("Success","200");
+            return new Response("Success","200", user);
         } catch (Exception e) {
-            return new Response(e.getMessage(),"400");
+            return new Response(e.getMessage(),"400",new User());
         }
 
     }
