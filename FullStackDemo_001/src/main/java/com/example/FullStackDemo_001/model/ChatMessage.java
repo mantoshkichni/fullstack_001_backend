@@ -20,4 +20,5 @@ public class ChatMessage {
     private String receiverId;
     private String content;
     private LocalDateTime timestamp;
+    private boolean isQuickMessage;
 }

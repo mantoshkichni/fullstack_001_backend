@@ -21,11 +21,19 @@ public class ChatController {
 
     @MessageMapping("/sendQuickMessage")
     @SendTo("/topic/public")
-    public void sendMessage(ChatMessage message) {
+    public void sendQuickMessage(ChatMessage message) {
         message.setTimestamp(LocalDateTime.now());
         messagingTemplate.convertAndSend(
                 "/topic/quickMessages",
                 message
+        );
+    }
+
+    @MessageMapping("/sendPrivateMessage")
+    public void sendToUser(ChatMessage message) {
+        message.setTimestamp(LocalDateTime.now());
+        messagingTemplate.convertAndSend(
+                "/queue/" + message.getReceiverId() + "/message", message
         );
     }
 }
