@@ -4,6 +4,7 @@ import com.example.FullStackDemo_001.model.ChatMessage;
 import com.example.FullStackDemo_001.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -18,16 +19,12 @@ public class ChatController {
     @Autowired
     private ChatRepository chatRepository;
 
-    @MessageMapping("/sendMessage")
+    @MessageMapping("/sendQuickMessage")
+    @SendTo("/topic/public")
     public void sendMessage(ChatMessage message) {
-
         message.setTimestamp(LocalDateTime.now());
-        chatRepository.save(message); // ✅ save in DB
-
-        // send to receiver only
-        messagingTemplate.convertAndSendToUser(
-                message.getReceiverId().toString(),
-                "/queue/messages",
+        messagingTemplate.convertAndSend(
+                "/topic/quickMessages",
                 message
         );
     }
